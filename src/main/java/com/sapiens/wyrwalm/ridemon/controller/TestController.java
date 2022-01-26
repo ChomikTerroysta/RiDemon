@@ -4,11 +4,11 @@ import com.sapiens.wyrwalm.ridemon.service.Service;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.json.JSONParser;
 import org.apache.tomcat.util.json.ParseException;
+import org.springframework.boot.jta.atomikos.AtomikosDependsOnBeanFactoryPostProcessor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 @RestController
@@ -30,11 +30,8 @@ public class TestController {
     @GetMapping("/service")
     @SuppressWarnings("unchecked")
     public int serviceTest(@RequestBody String json) throws ParseException {
+        /*  dodac obsluge bledow */
         JSONParser parser = new JSONParser(json);
-        Map<String, String> j;
-        j = (Map<String, String>) parser.parse();
-        parser.ensureEOF();
-
-        return service.toLog(j);
+        return service.toLog((Map<String, String>) parser.parse());
     }
 }
